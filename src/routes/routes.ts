@@ -1,18 +1,8 @@
 import type { FastifyInstance } from "fastify";
-import z from "zod";
+import { fooSchema } from "./schemas/foo";
 
 export async function routes(app: FastifyInstance) {
-  app.get(
-    "/",
-    {
-      schema: {
-        response: {
-          200: { message: z.string() },
-        },
-      },
-    },
-    () => {
-      return { message: "Heya" };
-    },
-  );
+  app.get("/", fooSchema, async (request, response) => {
+    return response.status(201).send({ message: "heyaa" });
+  });
 }
