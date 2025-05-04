@@ -1,9 +1,9 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
 
-const { PSQL_URL } = process.env
+const { PSQL_URL } = process.env;
 
-if(!PSQL_URL) {
+if (!PSQL_URL) {
   throw new Error("Required environment variable missing: PSQL_URL");
 }
 
