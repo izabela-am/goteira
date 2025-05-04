@@ -1,14 +1,6 @@
+import type { RedisClientType } from "redis";
 import { createClient } from "redis";
 
-export async function bootstrap() {
-  const client = await createClient()
-    .on("error", (err) => console.log("Redis Client Error", err))
-    .connect();
+const client: RedisClientType = createClient();
 
-  await client.set("key", "value");
-  const value = await client.get("key");
-
-  await client.close();
-  console.log(value);
-}
-
+export { client };
