@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { client } from "./providers/database/redis";
+import { client } from "./providers/database/Redis/connect";
 
 import { AppLogger } from "./providers/logger/winston";
 
@@ -16,7 +16,7 @@ function start() {
   client.connect().then(() => {
     logger.log({
       level: "info",
-      message: "HTTP server is up and running @ port 3333",
+      message: "Redis server is up and running",
     });
   });
 }

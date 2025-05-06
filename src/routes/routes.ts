@@ -1,8 +1,23 @@
-import { fooSchema } from "./schemas/foo";
+import { createUserSchema } from "./schemas/users";
 import { FastifyTypedInstance } from "./types";
 
-export async function routes(app: FastifyTypedInstance) {
-  app.get("/", fooSchema, async (request, response) => {
-    return response.status(201).send({ message: "heyaa" });
+import { CreateUserService } from "../services/CreateUserService";
+import { AppLogger } from "../providers/logger/winston";
+import { PostgresProvider } from "../providers/database/PostgreSQL/PostgresProvider";
+
+const createUser = new CreateUserService(
+  new AppLogger(),
+  new PostgresProvider()
+);
+
+async function routes(app: FastifyTypedInstance) {
+  app.post("/user/create", createUserSchema, async (request, reply) => {
+    const { email, password } = request.body;
+    
+    const userId = await createUser.run({ email, password });
+
+    return reply.send({ userId })
   });
 }
+
+export { routes };

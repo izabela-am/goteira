@@ -2,8 +2,18 @@ interface IAppLogger {
   log(data: ILogData): void;
 }
 
+type Levels =
+  | "emerg"
+  | "alert"
+  | "crit"
+  | "error"
+  | "warning"
+  | "notice"
+  | "info"
+  | "debug";
+
 interface ILogData {
-  level: string;
+  level: Levels;
   message: string;
 }
 
