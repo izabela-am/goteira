@@ -18,9 +18,9 @@ class CreateUserService {
   }
 
   async run({ email, password }: ICreateUser): Promise<string> {
-    const isEmailRegistered = await this.postgresProvider.findByEmail(email);
+    const _id = await this.postgresProvider.findByEmail(email);
 
-    if (!isEmailRegistered) {
+    if (_id.length < 0) {
       this.logger.log({
         level: "error",
         message: `[${Date.now()}] User Registration Failure :: Email ${email} already in use`,
@@ -30,7 +30,7 @@ class CreateUserService {
     }
 
     const password_hash = await argon2.hash(password);
-    
+
     const userId = await this.postgresProvider.createUser({
       email,
       password_hash,
@@ -38,10 +38,10 @@ class CreateUserService {
 
     this.logger.log({
       level: "info",
-      message: `[${Date.now()}] User <${userId}> was created successfully`,
+      message: `[${Date.now()}] User <${userId[0].id}> created successfully`,
     });
 
-    return userId;
+    return userId[0].id;
   }
 }
 
