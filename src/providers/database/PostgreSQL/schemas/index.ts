@@ -1,6 +1,6 @@
 import { pgTable, varchar, uuid, timestamp } from "drizzle-orm/pg-core";
 
-const users = pgTable("users", {
+export const users = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
   email: varchar({ length: 255 }).notNull().unique(),
   password_hash: varchar().notNull(),
@@ -13,4 +13,3 @@ const users = pgTable("users", {
   updated_at: timestamp().defaultNow(),
 });
 
-export { users };

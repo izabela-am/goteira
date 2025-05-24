@@ -18,4 +18,22 @@ const createUserSchema = {
   },
 };
 
-export { createUserSchema };
+const loginSchema = {
+  schema: {
+    tags: ["auth"],
+    description: "User login",
+    body: z.object({
+      email: z.string().email(),
+      password: z.string().min(8).max(70),
+    }),
+    response: {
+      201: z
+        .object({
+          access_token: z.string(),
+        })
+        .describe("User logged in successfully"),
+    },
+  },
+};
+
+export { createUserSchema, loginSchema };

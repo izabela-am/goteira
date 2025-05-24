@@ -18,9 +18,9 @@ class CreateUserService {
   }
 
   async run({ email, password }: ICreateUser): Promise<string> {
-    const _id = await this.postgresProvider.findByEmail(email);
+    const user = await this.postgresProvider.findByEmail(email);
 
-    if (_id.length < 0) {
+    if (user) {
       this.logger.log({
         level: "error",
         message: `[${Date.now()}] User Registration Failure :: Email ${email} already in use`,

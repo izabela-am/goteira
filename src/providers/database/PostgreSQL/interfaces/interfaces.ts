@@ -1,5 +1,5 @@
 interface IPostgresProvider {
-  findByEmail(email: string): Promise<ReturnID>;
+  findByEmail(email: string): Promise<IFindByEmail | undefined>;
   createUser(data: ICreateUser): Promise<ReturnID>;
 }
 
@@ -10,4 +10,10 @@ interface ICreateUser {
   password_hash: string;
 }
 
-export { IPostgresProvider, ICreateUser, ReturnID };
+interface IFindByEmail {
+  id: string;
+  password_hash: string;
+  role: string;
+}
+
+export { IPostgresProvider, ICreateUser, IFindByEmail, ReturnID };
